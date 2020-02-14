@@ -1,0 +1,11 @@
+{
+  "average_barom_pressure": "#485460",
+  "min_max_pressure_difference": "#485460",
+  "mbrep_pain_level_1": "#ffa801",
+  "catmh_dep_severity_1": "#3c40c6",
+  "Average heart rate (bpm)": "#ff3f34",
+  "Step count": "#44bd32",
+  "outgoing_calls": "#00a8ff",
+  "norm_outgoing_calls": "#00a8ff",
+  "sds_score_bs": "#273c75"
+}
