@@ -18,7 +18,7 @@ def import_longitudinal_file(
     return data
 
 
-def import_all_longitudinal_files(clean_only: bool = False) -> pd.DataFrame:
+def import_all_longitudinal_files(clean_only: bool = False, add_demog: bool = False) -> pd.DataFrame:
     """ Wrapper function to import all longitudinal data files
     
     Keyword Arguments:
@@ -37,12 +37,14 @@ def import_all_longitudinal_files(clean_only: bool = False) -> pd.DataFrame:
 
     files = os.listdir(subject_data_dir)
 
+    if add_demog or clean_only:
+        demog_df = import_demographic_file()
+
     if clean_only:
         print(
             '\t' +
             'Only importing patients with demographic information, and data until end of study'
         )
-        demog_df = import_demographic_file()
         subjects = demog_df.subject_id.unique()
         with_demog = [
             f for f in files if f.split('_Migraine')[0] in subjects
@@ -61,6 +63,17 @@ def import_all_longitudinal_files(clean_only: bool = False) -> pd.DataFrame:
 
     all_data_df = pd.concat(long_files, sort=False)
     all_data_df['Date'] = pd.to_datetime(all_data_df['Date'])
+    if add_demog:
+        print('\tAdding Demographic information to longitudinal data')
+        with_demog = all_data_df.merge(
+            demog_df,
+            how='inner',
+            validate='m:1'
+        )
+        if with_demog.shape[0] != all_data_df.shape[0]:
+            print('\tWARNING - With demog Length:', with_demog.shape[0], 'difference:', with_demog.shape[0] - all_data_df.shape[0])
+        return with_demog
+        
     return all_data_df
 
 def import_demographic_file() -> pd.DataFrame:

@@ -3,6 +3,10 @@
   "min_max_pressure_difference": "#485460",
   "mbrep_pain_level_1": "#ffa801",
   "catmh_dep_severity_1": "#3c40c6",
+  "catmh_mdd_diagnosis": [
+     "gray",
+     "#3c40c6"
+  ],
   "Average heart rate (bpm)": "#ff3f34",
   "Step count": "#44bd32",
   "outgoing_calls": "#00a8ff",
@@ -10,14 +14,16 @@
   "sds_score_bs": "#273c75",
   "cont_age": "#9c88ff",
   "mbrep_pain_pos_left_str": {
-    "Between Eyes": "black",
+    "Between Eyes": "#2d3436",
     "Left Back of Head (Lower)": "#95a5a6",
     "Left Back of Head (Upper)": "#2ecc71",
     "Left Back of Neck": "#f1c40f",
     "Left Eye": "#3498db",
     "Left Front Head": "#e74c3c",
     "Left Jaw": "#9b59b6",
-    "Left Temple": "#34495e"
+    "Left Temple": "#34495e",
+    "Left Cheek": "#e67e22",
+    "Teeth": "#bdc3c7"
   },
   "mbrep_pain_pos_right_str": {
     "Right Back of Head (Lower)": "#7f8c8d",
@@ -26,6 +32,7 @@
     "Right Eye": "#2980b9",
     "Right Front Head": "#c0392b",
     "Right Jaw": "#8e44ad",
-    "Right Temple": "#2c3e50"
+    "Right Temple": "#2c3e50",
+    "Right Cheek": "#d35400"
   }
 }

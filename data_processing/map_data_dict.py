@@ -8,6 +8,20 @@ def map_value_from_data_dict(
         data: pd.DataFrame,
         value_col: str,
     ) -> pd.Series:
+    """ Maps data in value col based on data dictionary from environment file
+
+    Arguments:
+        data {pd.DataFrame} -- input data
+        value_col {str} -- column with data to map
+
+    Raises:
+        ValueError: Could not find mapping dictionary for value_col
+        ValueError: More than 1 mapping dictionary found for value_col
+
+    Returns:
+        pd.Series -- mapped series from value columns
+    """
+    #TODO: Handle explicitly when value from data column not mappable (not in data dict)
     env = load_env()
     data_dict = pd.read_csv(env['data_dictionary_file'])
 
@@ -32,4 +46,3 @@ def map_value_from_data_dict(
         for val in dict_str.split(' | ')
     }
     return data[value_col].map(map_dict)
-
