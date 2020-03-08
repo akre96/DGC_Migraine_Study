@@ -46,7 +46,7 @@ def continuous_discrete_time_plot(
     ax.set_ylabel(cont_var)
     ax2 = ax.twinx()
     disc_data = data[[time_var, disc_var]].dropna()
-    ax.tick_params(axis='x', labelrotation=45)
+    ax.tick_params(axis='x', labelrotation=x_rotation)
     if disc_data.shape[0]:
         if 'mbrep' in disc_var:
             plot_migraine_as_duration(

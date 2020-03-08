@@ -1,9 +1,9 @@
 """ Functions for the importing and initial preprocessing of data
 """
 import os
+from typing import List
 import pandas as pd
 from data_processing.load_env import load_env
-
 
 def import_longitudinal_file(
         file_path: str,
@@ -29,13 +29,8 @@ def import_all_longitudinal_files(clean_only: bool = False, add_demog: bool = Fa
         pd.DataFrame -- concatenated data of particpants
     """
     env = load_env()
-    subject_data_dir = os.path.join(
-        env['data_root'],
-        env['longitudinal_data_folder']
-    )
+    subject_data_dir, files, file_paths = generate_subject_file_path_list(env)
     print('IMPORTING LONGITUDINAL DATA FROM:\n\t' + subject_data_dir)
-
-    files = os.listdir(subject_data_dir)
 
     if add_demog or clean_only:
         demog_df = import_demographic_file()
@@ -63,6 +58,8 @@ def import_all_longitudinal_files(clean_only: bool = False, add_demog: bool = Fa
 
     all_data_df = pd.concat(long_files, sort=False)
     all_data_df['Date'] = pd.to_datetime(all_data_df['Date'])
+    print('\tFiltering for time points newer than June 2016')
+    all_data_df = all_data_df[all_data_df.Date > '2016-06-01']
     if add_demog:
         print('\tAdding Demographic information to longitudinal data')
         with_demog = all_data_df.merge(
@@ -83,3 +80,14 @@ def import_demographic_file() -> pd.DataFrame:
     return demog.rename(columns={
         'record_id': 'subject_id'
         })
+
+def generate_subject_file_path_list(env) -> (str, List, List):
+
+    subject_data_dir = os.path.join(
+        env['data_root'],
+        env['longitudinal_data_folder']
+    )
+    files = os.listdir(subject_data_dir)
+    files = [f for f in files if f[0] not in ['~', '.']]
+    file_paths = [os.path.join(subject_data_dir, f) for f in files]
+    return subject_data_dir, files, file_paths
