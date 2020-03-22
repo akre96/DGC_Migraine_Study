@@ -17,6 +17,7 @@ def continuous_discrete_time_plot(
     disc_c: Any,
     cont_min_max: Dict = None,
     x_rotation: float = 0,
+    mbrep_as: str = 'bar',
     ):
     sns.lineplot(
         x=time_var,
@@ -44,23 +45,33 @@ def continuous_discrete_time_plot(
         )
 
     ax.set_ylabel(cont_var)
-    ax2 = ax.twinx()
     disc_data = data[[time_var, disc_var]].dropna()
     ax.tick_params(axis='x', labelrotation=x_rotation)
+    ax2 = None
     if disc_data.shape[0]:
         if 'mbrep' in disc_var:
-            plot_migraine_as_duration(
-                data,
-                disc_var,
-                ax2,
-            )
+            if mbrep_as == 'bar':
+                ylims = ax.get_ylim()
+                ax.vlines(disc_data.Date, ylims[0], ylims[1], color=disc_c, alpha=0.9)
+                ax.set_ylim(ylims)
+            else:
+                ax2 = ax.twinx()
+                plot_migraine_as_duration(
+                    data,
+                    disc_var,
+                    ax2,
+                )
+                ax2.set_ylabel(disc_var)
         else:
-            ax2.scatter(
+            ax2 = ax.twinx()
+            ax2.plot_date(
                 disc_data[time_var],
                 disc_data[disc_var],
                 c=disc_c,
+                linewidth=1,
+                linestyle='solid',
             )
-        ax2.set_ylabel(disc_var)
+            ax2.set_ylabel(disc_var)
     return ax, ax2
 
 def plot_cont_disc_all_subjects(
@@ -68,6 +79,7 @@ def plot_cont_disc_all_subjects(
     cont_var: str,
     disc_var: str,
     cont_min_max: Dict = None,
+    mbrep_as:str = 'bar',
 ):
     palette = load_palette()
     fig, axes = plt.subplots(ncols=5, nrows=7, figsize=(30,25))
@@ -87,7 +99,8 @@ def plot_cont_disc_all_subjects(
                 palette[cont_var],
                 palette[disc_var],
                 cont_min_max,
-                20
+                20,
+                mbrep_as
             )
         swtype = 'None'
         if 'swtype' in data.columns:

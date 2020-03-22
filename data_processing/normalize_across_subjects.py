@@ -1,3 +1,5 @@
+""" attempts to normalize data of different types for cross-subject comparison
+"""
 import pandas as pd
 
 def normalize_outgoing_calls(

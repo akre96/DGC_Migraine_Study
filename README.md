@@ -11,6 +11,12 @@ Python version 3.7.3
 - __dep_screening_validate.ipynb__: Python notebook aimed at confirming findings from another mobile health/depression study
 - __stumpy_test.ipynb__: Notebook to test out how the package StumPy works on toy examples
 - __subject_level_exploration.ipynb__: Notebook looking at metrics over time from all inidividual subjects
+- __assess_missing_longitudinal_data.ipynb__: Notebook to explore how much data is available/missing for subjects over time
+- __HMM_initial_implementation.ipynb__: Preliminary implementation of HMM to predict depression and migraine severity in 2 week chunks. Assesses data availability and formatting before training and validating a rough HMM.
+- __HMM_validation.ipynb__: Notebook to compare preformance of HMMs trained with and without mobile phone data on predicting depression/migraine severity.
+- __migraine_and_pressure_change.ipynb__: Notebook begins by looking at characteristics of migraines, reporting frequency, pain. Assesses how related migraines are to preceeding changes to barometric pressure.
+- 
+
 
 ---
 Samir Akre

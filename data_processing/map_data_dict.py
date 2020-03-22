@@ -21,7 +21,6 @@ def map_value_from_data_dict(
     Returns:
         pd.Series -- mapped series from value columns
     """
-    #TODO: Handle explicitly when value from data column not mappable (not in data dict)
     env = load_env()
     data_dict = pd.read_csv(env['data_dictionary_file'])
 
